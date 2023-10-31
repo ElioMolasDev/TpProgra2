@@ -1,5 +1,6 @@
 package Amazing;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Amazing {
 
@@ -39,7 +40,7 @@ public class Amazing {
 //    CERRAR PEDIDO
     public void cerrarPedido(int idPedido) {
     	
-    	Pedido pedidoABuscar = buscarPedido(idPedido, listaPedidos);
+    	Pedido pedidoABuscar = buscarPedidoConPed(idPedido, listaPedidos);
     	
     	if (pedidoABuscar != null) 	{
     		
@@ -51,9 +52,9 @@ public class Amazing {
     // AGREGA PAQUETE ESPECIAL
     public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje, int adicional) {
     	
-    	if (buscarPedido(idPedido, listaPedidos) != null){
+    	if (buscarPedidoConPed(idPedido, listaPedidos) != null){
     		
-    		this.listaPedidos.get(idPedido).agregarPaquete(idPedido, volumen, precio, porcentaje, adicional);	
+    		this.listaPedidos.get(idPedido).agregarPaq(idPedido, volumen, precio, porcentaje, adicional);	
     		return idPaquete();
     	}
     	
@@ -66,9 +67,9 @@ public class Amazing {
     // AGREGA PAQUETE ORDINARIO
     public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje) {
     	
-    	if (buscarPedido(idPedido, listaPedidos) != null){
+    	if (buscarPedidoConPed(idPedido, listaPedidos) != null){
     		
-    		this.listaPedidos.get(idPedido).agregarPaquete(idPedido, volumen, precio, porcentaje);	
+    		this.listaPedidos.get(idPedido).agregarPaq(idPedido, volumen, precio, porcentaje);	
     		return idPaquete();
     	}
     	
@@ -79,10 +80,18 @@ public class Amazing {
     	}
     }
     
+    // QUITA PAQUETE
+    public int quitarPaquete(int idPaquete) {
+    		
+    	Pedido.quitarPaquete(idPaquete, buscarPedidoConPaq(idPaquete, listaPedidos));
+    	return idPaquete;
+
+    	}
+    		
+    
     
 
   /*  
-    public boolean quitarPaquete(int codPaquete);
     public void registrarAutomovil(String patente, int volMax, int valorViaje, int maxPaq);
     public void registrarUtilitario(String patente, int volMax, int valorViaje, int valorExtra);
     public void registrarCamion(String patente, int volMax, int valorViaje, int adicXPaq);
@@ -90,9 +99,10 @@ public class Amazing {
     public double costoEntrega(String patente);
     public double facturacionTotalPedidosCerrados();
     public Map<Integer,String> pedidosNoEntregados();
-    public static double cerrarPedido (int codPedido);*/
+*/
 
     //Aux:
+    
     private static int idPedido() {
     	
         return Pedido.obtenerIdPedido();
@@ -104,21 +114,52 @@ public class Amazing {
     	 return Pedido.idPaquete();
     	 
     }
-    
-    public static Pedido buscarPedido(int codPedido, HashMap<Integer, Pedido> listaPedidos) {
+//    BUSCAR PEDIDO A PARTIR DE IDPEDIDO
+    public Pedido buscarPedidoConPed(int idPedido, HashMap<Integer, Pedido> listaPedidos) {
     	
-        if (listaPedidos.containsKey(codPedido)) {
-            return listaPedidos.get(codPedido);
+        if (listaPedidos.containsKey(idPedido)) {
+        	
+            return listaPedidos.get(idPedido);
         }
+        
         else {
+        	
         	throw new IllegalArgumentException("No se encuentra pedido con esa id.");
         }
     }
     
+    
+    
+//  BUSCAR PEDIDO A PARTIR DE IDPAQUETE
+    public Pedido buscarPedidoConPaq(int idPaquete, HashMap<Integer, Pedido> listaPedidos) {
+        for (HashMap.Entry<Integer, Pedido> entry : listaPedidos.entrySet()) {
+            Pedido pedido = entry.getValue();
+            if (pedido.existePaquete(idPaquete)) {
+                // Si existe el paquete en el carrito de este pedido, devuelve el pedido.
+                return pedido;
+            }
+        }
 
-    /*private int Integer idPedido(Pedido p){
-        return p.obtenerIdPedido();
-    }*/
+        throw new IllegalArgumentException("No se encuentra pedido con esa id.");
+    }
+  
+    
+    
+//		BUSCA SI EXISTE PEDIDO
+    private Boolean existePedido(int idPedido, HashMap<Integer, Pedido> listaPedidos) {
+    	
+   	 if (listaPedidos.containsKey(idPedido)) {
+   		 
+            return true;
+        }
+        else {
+        	throw new IllegalArgumentException("No se encuentra pedido con esa id.");
+        }	
+   }
+    
+    
+
+  
 /*
     private static Boolean existePedido(Int idPedido);
     private static Boolean existeCliente(Int idCliente);
@@ -154,6 +195,8 @@ public class Amazing {
 
 		empresa.cerrarPedido(p1);
 		empresa.cerrarPedido(p3);
+		
+		empresa.quitarPaquete(paq10);
 		   
 
     }

@@ -44,8 +44,8 @@ public class Pedido {
         }
     }
 
-    // AGREGA ESPECIAL PAQUETE A PEDIO
-    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
+    // AGREGA PAQUETE ESPECIAL  A PEDIO
+    public int agregarPaq(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
     	
     	PaqueteEspecial paq = new PaqueteEspecial(codPedido,  volumen,  precio,  porcentaje,  adicional, obtenerDireccion());
     	
@@ -54,8 +54,8 @@ public class Pedido {
         return idPaquete();
      }
  
-    // AGREGA ORDINARIO PAQUETE A PEDIO
-    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
+    // AGREGA PAQUETE ORDINARIO  A PEDIO
+    public int agregarPaq(int codPedido, int volumen, int precio, int porcentaje) {
     	
     	PaqueteOrdinario paq = new PaqueteOrdinario(codPedido,  volumen,  precio,  porcentaje, obtenerDireccion());
     	
@@ -65,27 +65,21 @@ public class Pedido {
      }
     
 
-//    // QUITA PAQUETE D PEDIDO
-//    public void quitarPaquete(int idPaquete) {
-//        if (pedidoCerrado) {
-//            throw new IllegalArgumentException("El pedido está cerrado, no se pueden quitar paquetes.");
-//        }
-//
-//        Paquete paqueteAQuitar = null;
-//        for (Paquete paquete : carritoDePaquetes) {
-//            if (paquete.getId() == idPaquete) {
-//                paqueteAQuitar = paquete;
-//                break;
-//            }
-//        }
-//
-//        if (paqueteAQuitar != null) {
-//            carritoDePaquetes.remove(paqueteAQuitar);
-//            precioDePedido -= paqueteAQuitar.getCostoDeEnvio();
-//        } else {
-//            throw new IllegalArgumentException("El paquete con el ID especificado no se encuentra en el carrito.");
-//        }
-//    }
+    // QUITA PAQUETE D PEDIDO
+    public static void quitarPaquete(int idPaquete, Pedido pedido) {
+    	
+        if (pedido.obtenerEstadoDePedido()) {
+            throw new IllegalArgumentException("El pedido está cerrado, no se pueden quitar paquetes.");
+        }
+
+        if (pedido.existePaquete(idPaquete)) {
+            pedido.carritoDePaquetes.remove(idPaquete);
+        } 
+        
+        else {
+            throw new IllegalArgumentException("No se encuentra paquete con esa id.");
+        }
+    }
 
     // CIERRA PEDIDO
     public void cerrarPed() {
@@ -95,19 +89,20 @@ public class Pedido {
     }
         
     //  DEVUELVE ID PEDIDO
-    public static Integer obtenerIdPedido() {
+    public static int obtenerIdPedido() {
         return idPedido;
     }
 
     //  DEVUELVE ID PAQUETE
-    public static Integer idPaquete() {
+    public static int idPaquete() {
         return Paquete.obtenerIdPaquete();
     }
 
-    //  DEVUELVE PEDIDO A PARTIR DE ID
+    //  EXISTE PAQUETE
+    public boolean existePaquete(int idPaquete) {
+        return carritoDePaquetes.containsKey(idPaquete);
+    }
    
-    
-    
 
     // DEVUELVE PRECIO APAGAR DE CLEINTE
     public int precioAPagar() {
@@ -127,6 +122,12 @@ public class Pedido {
     //DEVUELVE DIRECCION CLEINTE
     public String obtenerDireccion() {
         return direccionEntrega;
+    }
+    
+
+    //DEVUELVE CARRITO DE PAQUETES
+    public HashMap<Integer, Paquete> obtenerCarritoDePaquetes() {
+        return carritoDePaquetes;
     }
 
 }
