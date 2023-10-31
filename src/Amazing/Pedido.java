@@ -44,17 +44,23 @@ public class Pedido {
         }
     }
 
-    // AGREGA PAQUETE A PEDIO
-    public Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
-    	PaqueteEspecial paq = new PaqueteEspecial(codPedido,  volumen,  precio,  porcentaje,  adicional);
-         this.carritoDePaquetes.put(idPaquete(), paq);
-         return idPaquete();
+    // AGREGA ESPECIAL PAQUETE A PEDIO
+    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
+    	
+    	PaqueteEspecial paq = new PaqueteEspecial(codPedido,  volumen,  precio,  porcentaje,  adicional, obtenerDireccion());
+    	
+    	this.carritoDePaquetes.put(idPaquete(), paq);
+    	
+        return idPaquete();
      }
  
-
-    public Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
-    	PaqueteOrdinario paq = new PaqueteOrdinario(codPedido,  volumen,  precio,  porcentaje);
+    // AGREGA ORDINARIO PAQUETE A PEDIO
+    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
+    	
+    	PaqueteOrdinario paq = new PaqueteOrdinario(codPedido,  volumen,  precio,  porcentaje, obtenerDireccion());
+    	
          this.carritoDePaquetes.put(idPaquete(), paq);
+         
          return idPaquete();
      }
     
@@ -101,9 +107,11 @@ public class Pedido {
 
     //  DEVUELVE PEDIDO A PARTIR DE ID
     public static Pedido buscarPedido(int codPedido, HashMap<Integer, Pedido> listaPedidos) {
+    	
         if (listaPedidos.containsKey(codPedido)) {
             return listaPedidos.get(codPedido);
-        } else {
+        }
+        else {
             return null; // Devolver null si no se encuentra el pedido
         }
     }
