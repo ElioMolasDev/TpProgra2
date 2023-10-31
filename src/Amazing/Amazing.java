@@ -4,38 +4,65 @@ import java.util.HashMap;
 public class Amazing {
 
     public HashMap<Integer, Pedido> listaPedidos;
-    public HashMap<String, Transporte> listaTransportes;
+//    public HashMap<String, Transporte> listaTransportes;
     public String cuit;
     public Double facturacion;
 
     public Amazing(String cuit) {
         this.cuit = cuit;
         this.listaPedidos = new HashMap<>();
-        this.listaTransportes = new HashMap<>();
+//        this.listaTransportes = new HashMap<>();
     }
 
     //    CREA UNA EMPRESA
     public Amazing crear(String cuit) {
+    	
         if (cuit == null || cuit.isEmpty()) {
+        	
             throw new IllegalArgumentException("El CUIT no puede ser nulo o vacío.");
         }
+        
         return new Amazing(cuit);
     }
 
     // REGSITRA PEDIDO
     public Integer registrarPedido(String nombreCliente, String direccionAentregar, Integer DNI) {
+    	
         Pedido ped = new Pedido(nombreCliente,  direccionAentregar,  DNI);
         this.listaPedidos.put(idPedido(), ped);
         return idPedido();
+        
     }
 
-    // AGREGA PAQUETE
-    public Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
-        return Pedido.agregarPaquete(codPedido, volumen, precio, porcentaje, adicional);
+    // AGREGA PAQUETE ESPECIAL
+    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
+    	
+    	if (this.listaPedidos.get(codPedido) != null){
+    		
+    		this.listaPedidos.get(codPedido).agregarPaquete(codPedido, volumen, precio, porcentaje, adicional);	
+    		return idPaquete();
+    	}
+    	
+    	else {
+    		
+    		throw new IllegalArgumentException("El ID del pedido no se encuentra.");
+    		
+    	}
     }
-
-    public Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
-        return Pedido.agregarPaquete(codPedido, volumen, precio, porcentaje);
+    // AGREGA PAQUETE ORDINARIO
+    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
+    	
+    	if (this.listaPedidos.get(codPedido) != null){
+    		
+    		this.listaPedidos.get(codPedido).agregarPaquete(codPedido, volumen, precio, porcentaje);	
+    		return idPaquete();
+    	}
+    	
+    	else {
+    		
+    		throw new IllegalArgumentException("El ID del pedido no se encuentra.");
+    		
+    	}
     }
 
   /*  public int Paquete agregarPaquete(int codPedido, int volumen, int precio, int costoEnvio);
@@ -51,8 +78,16 @@ public class Amazing {
     public static double cerrarPedido (int codPedido);*/
 
     //Aux:
-    private static Integer idPedido() {
+    private static int idPedido() {
+    	
         return Pedido.obtenerIdPedido();
+        
+    }
+    
+    private static int idPaquete() {
+    	
+    	 return Pedido.idPaquete();
+    	 
     }
 
     /*private int Integer idPedido(Pedido p){

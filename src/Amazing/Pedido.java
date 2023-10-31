@@ -15,6 +15,21 @@ public class Pedido {
 
     public Pedido(String nombreCliente, String direccionEntrega, int DNI) {
 
+    	validacionPed( nombreCliente,  direccionEntrega,  DNI);
+
+        this.idPedido = contadorPedidos++;
+        this.DNI = DNI;
+        this.nombreCliente = nombreCliente;
+        this.direccionEntrega = direccionEntrega;
+        this.carritoDePaquetes = new HashMap<>();
+        this.pedidoCerrado = false;
+        this.precioDePedido = 0;
+    }
+    
+    
+    //VALIDACION PEDIDO
+    private void validacionPed(String nombreCliente, String direccionEntrega, int DNI) {
+    	
         if (nombreCliente == null || nombreCliente.isEmpty()) {
             throw new IllegalArgumentException("El nombre del cliente no puede ser nulo o vacío.");
         }
@@ -25,46 +40,24 @@ public class Pedido {
 
         if (DNI <= 0) {
             throw new IllegalArgumentException("El DNI debe ser un valor positivo.");
+            
         }
-
-        this.idPedido = contadorPedidos++;
-        this.DNI = DNI;
-        this.nombreCliente = nombreCliente;
-        this.direccionEntrega = direccionEntrega;
-        this.carritoDePaquetes = new HashMap<>();
-        this.pedidoCerrado = false;
-        this.precioDePedido = 0;
     }
-    //CREA PEDIDO
-   // public static Pedido crearPedido(String nombreCliente, String direccionEntrega, int DNI) {
-
-    /*   if (nombreCliente == null || nombreCliente.isEmpty()) {
-            throw new IllegalArgumentException("El nombre del cliente no puede ser nulo o vacío.");
-      }
-
-        if (direccionEntrega == null || direccionEntrega.isEmpty()) {
-            throw new IllegalArgumentException("La dirección no puede ser nula o vacía.");
-        }
-
-        if (DNI <= 0) {
-            throw new IllegalArgumentException("El DNI debe ser un valor positivo.");
-        }
-
-        return new Pedido(nombreCliente, direccionEntrega, DNI);
-
-    }*/
 
     // AGREGA PAQUETE A PEDIO
-    public static Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
-    	Paquete paquete = 
-        carritoDePaquetes.put(idPaquete(), (Paquete.crearPaquete(codPedido, volumen,  precio,  porcentaje,  adicional)));
-        return idPaquete();
-    }
+    public Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
+    	PaqueteEspecial paq = new PaqueteEspecial(codPedido,  volumen,  precio,  porcentaje,  adicional);
+         this.carritoDePaquetes.put(idPaquete(), paq);
+         return idPaquete();
+     }
+ 
 
     public Integer agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
-        carritoDePaquetes.put(idPaquete(), (Paquete.crearPaquete(codPedido, volumen,  precio,  porcentaje)));
-        return idPaquete();
-    }
+    	PaqueteOrdinario paq = new PaqueteOrdinario(codPedido,  volumen,  precio,  porcentaje);
+         this.carritoDePaquetes.put(idPaquete(), paq);
+         return idPaquete();
+     }
+    
 
     /*// QUITA PAQUETE D PEDIDO
     public void quitarPaquete(int idPaquete) {
@@ -102,7 +95,7 @@ public class Pedido {
     }
 
     //  DEVUELVE ID PAQUETE
-    private static Integer idPaquete() {
+    public static Integer idPaquete() {
         return Paquete.obtenerIdPaquete();
     }
 
@@ -132,7 +125,7 @@ public class Pedido {
 
     //DEVUELVE DIRECCION CLEINTE
     public String obtenerDireccion() {
-        return this.direccionEntrega;
+        return direccionEntrega;
     }
 
 }
