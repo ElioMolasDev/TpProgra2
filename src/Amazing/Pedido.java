@@ -65,36 +65,35 @@ public class Pedido {
      }
     
 
-    /*// QUITA PAQUETE D PEDIDO
-    public void quitarPaquete(int idPaquete) {
-        if (pedidoCerrado) {
-            throw new IllegalArgumentException("El pedido está cerrado, no se pueden quitar paquetes.");
-        }
-
-        Paquete paqueteAQuitar = null;
-        for (Paquete paquete : carritoDePaquetes) {
-            if (paquete.getId() == idPaquete) {
-                paqueteAQuitar = paquete;
-                break;
-            }
-        }
-
-        if (paqueteAQuitar != null) {
-            carritoDePaquetes.remove(paqueteAQuitar);
-            precioDePedido -= paqueteAQuitar.getCostoDeEnvio();
-        } else {
-            throw new IllegalArgumentException("El paquete con el ID especificado no se encuentra en el carrito.");
-        }
-    }
+//    // QUITA PAQUETE D PEDIDO
+//    public void quitarPaquete(int idPaquete) {
+//        if (pedidoCerrado) {
+//            throw new IllegalArgumentException("El pedido está cerrado, no se pueden quitar paquetes.");
+//        }
+//
+//        Paquete paqueteAQuitar = null;
+//        for (Paquete paquete : carritoDePaquetes) {
+//            if (paquete.getId() == idPaquete) {
+//                paqueteAQuitar = paquete;
+//                break;
+//            }
+//        }
+//
+//        if (paqueteAQuitar != null) {
+//            carritoDePaquetes.remove(paqueteAQuitar);
+//            precioDePedido -= paqueteAQuitar.getCostoDeEnvio();
+//        } else {
+//            throw new IllegalArgumentException("El paquete con el ID especificado no se encuentra en el carrito.");
+//        }
+//    }
 
     // CIERRA PEDIDO
-    public void cerrarPedido() {
-        if (pedidoCerrado) {
-            throw new IllegalArgumentException("El pedido ya está cerrado.");
-        }
+    public void cerrarPed() {
 
         pedidoCerrado = true;
-    }*/
+        
+    }
+        
     //  DEVUELVE ID PEDIDO
     public static Integer obtenerIdPedido() {
         return idPedido;
@@ -106,15 +105,9 @@ public class Pedido {
     }
 
     //  DEVUELVE PEDIDO A PARTIR DE ID
-    public static Pedido buscarPedido(int codPedido, HashMap<Integer, Pedido> listaPedidos) {
-    	
-        if (listaPedidos.containsKey(codPedido)) {
-            return listaPedidos.get(codPedido);
-        }
-        else {
-            return null; // Devolver null si no se encuentra el pedido
-        }
-    }
+   
+    
+    
 
     // DEVUELVE PRECIO APAGAR DE CLEINTE
     public int precioAPagar() {

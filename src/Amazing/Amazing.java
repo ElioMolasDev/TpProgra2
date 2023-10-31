@@ -29,17 +29,31 @@ public class Amazing {
     public Integer registrarPedido(String nombreCliente, String direccionAentregar, Integer DNI) {
     	
         Pedido ped = new Pedido(nombreCliente,  direccionAentregar,  DNI);
+        
         this.listaPedidos.put(idPedido(), ped);
+        
         return idPedido();
+        
+    }
+    
+//    CERRAR PEDIDO
+    public void cerrarPedido(int idPedido) {
+    	
+    	Pedido pedidoABuscar = buscarPedido(idPedido, listaPedidos);
+    	
+    	if (pedidoABuscar != null) 	{
+    		
+    		pedidoABuscar.cerrarPed();
+    	}
         
     }
 
     // AGREGA PAQUETE ESPECIAL
-    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
+    public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje, int adicional) {
     	
-    	if (this.listaPedidos.get(codPedido) != null){
+    	if (buscarPedido(idPedido, listaPedidos) != null){
     		
-    		this.listaPedidos.get(codPedido).agregarPaquete(codPedido, volumen, precio, porcentaje, adicional);	
+    		this.listaPedidos.get(idPedido).agregarPaquete(idPedido, volumen, precio, porcentaje, adicional);	
     		return idPaquete();
     	}
     	
@@ -50,11 +64,11 @@ public class Amazing {
     	}
     }
     // AGREGA PAQUETE ORDINARIO
-    public int agregarPaquete(int codPedido, int volumen, int precio, int porcentaje) {
+    public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje) {
     	
-    	if (this.listaPedidos.get(codPedido) != null){
+    	if (buscarPedido(idPedido, listaPedidos) != null){
     		
-    		this.listaPedidos.get(codPedido).agregarPaquete(codPedido, volumen, precio, porcentaje);	
+    		this.listaPedidos.get(idPedido).agregarPaquete(idPedido, volumen, precio, porcentaje);	
     		return idPaquete();
     	}
     	
@@ -64,9 +78,10 @@ public class Amazing {
     		
     	}
     }
+    
+    
 
-  /*  public int Paquete agregarPaquete(int codPedido, int volumen, int precio, int costoEnvio);
-    public  int Paquete agregarPaquete(int codPedido, int volumen, int precio, int porcentaje, int adicional);
+  /*  
     public boolean quitarPaquete(int codPaquete);
     public void registrarAutomovil(String patente, int volMax, int valorViaje, int maxPaq);
     public void registrarUtilitario(String patente, int volMax, int valorViaje, int valorExtra);
@@ -89,6 +104,17 @@ public class Amazing {
     	 return Pedido.idPaquete();
     	 
     }
+    
+    public static Pedido buscarPedido(int codPedido, HashMap<Integer, Pedido> listaPedidos) {
+    	
+        if (listaPedidos.containsKey(codPedido)) {
+            return listaPedidos.get(codPedido);
+        }
+        else {
+        	throw new IllegalArgumentException("No se encuentra pedido con esa id.");
+        }
+    }
+    
 
     /*private int Integer idPedido(Pedido p){
         return p.obtenerIdPedido();
@@ -124,6 +150,11 @@ public class Amazing {
         int paq8= empresa.agregarPaquete(p1, 35000, 134000, 3, 400);
         int paq9= empresa.agregarPaquete(p4, 120000, 56000, 2, 1100);
         int paq10= empresa.agregarPaquete(p6, 1500, 3890, 1000);
+        
+
+		empresa.cerrarPedido(p1);
+		empresa.cerrarPedido(p3);
+		   
 
     }
 
