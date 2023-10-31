@@ -40,11 +40,10 @@ public class Amazing {
 //    CERRAR PEDIDO
     public void cerrarPedido(int idPedido) {
     	
-    	Pedido pedidoABuscar = buscarPedidoConPed(idPedido, listaPedidos);
+    	if (existePedido(idPedido)){
     	
-    	if (pedidoABuscar != null) 	{
-    		
-    		pedidoABuscar.cerrarPed();
+    		 buscarPedidoConPed(idPedido, listaPedidos).cerrarPed();;
+    	   		
     	}
         
     }
@@ -52,9 +51,9 @@ public class Amazing {
     // AGREGA PAQUETE ESPECIAL
     public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje, int adicional) {
     	
-    	if (buscarPedidoConPed(idPedido, listaPedidos) != null){
+    	if (existePedido(idPedido)){
     		
-    		this.listaPedidos.get(idPedido).agregarPaq(idPedido, volumen, precio, porcentaje, adicional);	
+    		buscarPedidoConPed(idPedido, listaPedidos).agregarPaq(idPedido, volumen, precio, porcentaje, adicional);	
     		return idPaquete();
     	}
     	
@@ -67,9 +66,9 @@ public class Amazing {
     // AGREGA PAQUETE ORDINARIO
     public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje) {
     	
-    	if (buscarPedidoConPed(idPedido, listaPedidos) != null){
+    	if (existePedido(idPedido)){
     		
-    		this.listaPedidos.get(idPedido).agregarPaq(idPedido, volumen, precio, porcentaje);	
+    		buscarPedidoConPed(idPedido, listaPedidos).agregarPaq(idPedido, volumen, precio, porcentaje);	
     		return idPaquete();
     	}
     	
@@ -132,8 +131,10 @@ public class Amazing {
     
 //  BUSCAR PEDIDO A PARTIR DE IDPAQUETE
     public Pedido buscarPedidoConPaq(int idPaquete, HashMap<Integer, Pedido> listaPedidos) {
+    	
         for (HashMap.Entry<Integer, Pedido> entry : listaPedidos.entrySet()) {
             Pedido pedido = entry.getValue();
+            
             if (pedido.existePaquete(idPaquete)) {
                 // Si existe el paquete en el carrito de este pedido, devuelve el pedido.
                 return pedido;
@@ -146,7 +147,7 @@ public class Amazing {
     
     
 //		BUSCA SI EXISTE PEDIDO
-    private Boolean existePedido(int idPedido, HashMap<Integer, Pedido> listaPedidos) {
+    private Boolean existePedido(int idPedido) {
     	
    	 if (listaPedidos.containsKey(idPedido)) {
    		 
@@ -161,7 +162,6 @@ public class Amazing {
 
   
 /*
-    private static Boolean existePedido(Int idPedido);
     private static Boolean existeCliente(Int idCliente);
     private static Cliente buscarCliente(Int idCliente);
     private static Boolean clienteTienePedidoAbierto(Int idCliente)
