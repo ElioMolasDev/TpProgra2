@@ -10,7 +10,7 @@ public abstract class  Paquete {
 
     public Paquete(int codPedido, int volumen, int precio, int porcentaje, int adicional, String direccionEntrega) {
     	
-    	validacionPaq1( codPedido,  volumen,  precio,  porcentaje,  adicional, direccionEntrega);
+    	validacionPaqEsp( codPedido,  volumen,  precio,  porcentaje,  adicional, direccionEntrega);
     	
         this.idPaquete = contadorPaquetes++;
         this.volumen = volumen;
@@ -18,9 +18,9 @@ public abstract class  Paquete {
         this.direccionEntrega = direccionEntrega;
 
     }
-    public Paquete(int codPedido, int volumen, int precio, int porcentaje, String direccionEntrega) {
+    public Paquete(int codPedido, int volumen, int precio, int adicional, String direccionEntrega) {
     	
-    	validacionPaq2( codPedido,  volumen,  precio,  porcentaje, direccionEntrega);
+    	validacionPaqOrd( codPedido,  volumen,  precio,  adicional, direccionEntrega);
     	
         this.idPaquete = contadorPaquetes++;
         this.volumen = volumen;
@@ -32,7 +32,7 @@ public abstract class  Paquete {
 
     //CREA PAQUETE
 
-    private void validacionPaq1(int codPedido, int volumen, int precio, int porcentaje, int adicional, String direccionEntrega) {
+    private void validacionPaqEsp(int codPedido, int volumen, int precio, int porcentaje, int adicional, String direccionEntrega) {
     	
     	if (codPedido < 0) {
             throw new IllegalArgumentException("El ID del pedido no puede ser negativo.");
@@ -59,7 +59,7 @@ public abstract class  Paquete {
         }
     }
  
-    private void validacionPaq2(int codPedido, int volumen, int precio, int porcentaje, String direccionEntrega) {
+    private void validacionPaqOrd(int codPedido, int volumen, int precio, int adicional, String direccionEntrega) {
     	
         if (codPedido < 0) {
             throw new IllegalArgumentException("El ID del pedido no puede ser negativo.");
@@ -73,8 +73,8 @@ public abstract class  Paquete {
             throw new IllegalArgumentException("El precio del paquete debe ser mayor que cero.");
         }
 
-        if (porcentaje <= 0) {
-            throw new IllegalArgumentException("El porcentaje/adicional del paquete debe ser mayor que cero.");
+        if (adicional <= 0) {
+            throw new IllegalArgumentException("El adicional del paquete debe ser mayor que cero.");
         }
         
         if (direccionEntrega == null || direccionEntrega.isEmpty()) {

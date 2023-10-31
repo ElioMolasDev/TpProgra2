@@ -64,11 +64,11 @@ public class Amazing {
     	}
     }
     // AGREGA PAQUETE ORDINARIO
-    public int agregarPaquete(int idPedido, int volumen, int precio, int porcentaje) {
+    public int agregarPaquete(int idPedido, int volumen, int precio, int adicional) {
     	
     	if (existePedido(idPedido)){
     		
-    		buscarPedidoConPed(idPedido, listaPedidos).agregarPaq(idPedido, volumen, precio, porcentaje);	
+    		buscarPedidoConPed(idPedido, listaPedidos).agregarPaq(idPedido, volumen, precio, adicional);	
     		return idPaquete();
     	}
     	
