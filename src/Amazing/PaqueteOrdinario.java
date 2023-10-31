@@ -5,6 +5,7 @@ public class PaqueteOrdinario extends Paquete {
 	public PaqueteOrdinario(int codPedido, int volumen, int precio, int porcentaje, String direccionEntrega) {
 		
 		super(codPedido, volumen, precio, porcentaje, direccionEntrega);
+		this.costoDeEnvio = porcentaje;
 		
 	}
 	

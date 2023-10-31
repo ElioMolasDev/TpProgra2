@@ -6,7 +6,7 @@ public abstract class  Paquete {
     private int volumen;
     private int  precio;
     private String direccionEntrega;
-    private int costoDeEnvio;
+    protected int costoDeEnvio;
 
     public Paquete(int codPedido, int volumen, int precio, int porcentaje, int adicional, String direccionEntrega) {
     	
@@ -16,7 +16,7 @@ public abstract class  Paquete {
         this.volumen = volumen;
         this.precio = precio;
         this.direccionEntrega = direccionEntrega;
-        this.costoDeEnvio = ( (porcentaje * adicional) / 100) + adicional;
+
     }
     public Paquete(int codPedido, int volumen, int precio, int porcentaje, String direccionEntrega) {
     	
@@ -26,7 +26,7 @@ public abstract class  Paquete {
         this.volumen = volumen;
         this.precio = precio;
         this.direccionEntrega = direccionEntrega;
-        this.costoDeEnvio = porcentaje;
+
     }
 
 
@@ -96,6 +96,7 @@ public abstract class  Paquete {
     public int obtenerVolumen() {
     	return volumen;
     }
+    
     
     
 
