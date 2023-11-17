@@ -1,6 +1,7 @@
 package Amazing;
 
 public class Utilitario extends Transporte{
+
 	private int valorExtra;
 	
 	public Utilitario(String patente, int volumenMaximo, double costoPorViaje, int valorExtra) {
@@ -13,13 +14,14 @@ public class Utilitario extends Transporte{
 
 	@Override
 	public Void cargarPaquete(Paquete paquete) {
-		agregarPaquete(paquete);
+		return null;
+//		agregarPaquete(paquete);
 	}
 
-	@Override
-	public Double costoPorViaje() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Double costoPorViaje() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

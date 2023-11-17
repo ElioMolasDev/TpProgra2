@@ -5,15 +5,17 @@ import java.util.Map;
 public class Amazing {
 
     public HashMap<Integer, Pedido> listaPedidos;
-//    public HashMap<String, Transporte> listaTransportes;
+    public HashMap<String, Transporte> listaTransportes;
     public String cuit;
     public Double facturacion;
 
     public Amazing(String cuit) {
         this.cuit = cuit;
         this.listaPedidos = new HashMap<>();
-//        this.listaTransportes = new HashMap<>();
+        this.listaTransportes = new HashMap<>();
     }
+
+
 
     //    CREA UNA EMPRESA
     public Amazing crear(String cuit) {
@@ -86,33 +88,65 @@ public class Amazing {
     	return idPaquete;
 
     	}
-    		
-    
-    
+
+
+        //La carga de un transporte devuelve un listado de los paquetes cargados creando un String
+        //con forma de listado donde cada renglón representa un paquete.
+        //" + [ NroPedido - codPaquete ] dirección"
+        //por ejemplo:
+        //" + [ 1002 - 101 ] Gutierrez 1147"
+    public void registrarAutomovil(String patente, int volMax, int valorViaje, int maxPaq){
+
+        Transporte t = new Automovil(patente, volMax, valorViaje, maxPaq);
+
+        this.listaTransportes.put(patente, t);
+
+    }
+
+    public void registrarUtilitario(String patente, int volMax, int valorViaje, int valorExtra){
+
+        Transporte t = new Utilitario(patente, volMax, valorViaje, valorExtra);
+
+        this.listaTransportes.put(patente, t);
+
+    }
+
+    public void registrarCamion(String patente, int volMax, int valorViaje, int adicXPaq){
+
+        Transporte t = new Camion(patente, volMax, valorViaje, adicXPaq);
+
+        this.listaTransportes.put(patente, t);
+
+    }
 
   /*  
-    public void registrarAutomovil(String patente, int volMax, int valorViaje, int maxPaq);
-    public void registrarUtilitario(String patente, int volMax, int valorViaje, int valorExtra);
-    public void registrarCamion(String patente, int volMax, int valorViaje, int adicXPaq);
+
     public static String cargarTransporte(String patente);
     public double costoEntrega(String patente);
     public double facturacionTotalPedidosCerrados();
     public Map<Integer,String> pedidosNoEntregados();
 */
 
-    //Aux:
-    
+    //////////////////////////////////////////FUNCIONES AUXILIARES///////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //  DEVUELVE EL ID DEL PEDIDO
     private static int idPedido() {
     	
         return Pedido.obtenerIdPedido();
         
     }
-    
+
+
+    //  DEVUELVE EL ID DEL PAQUETE
     private static int idPaquete() {
     	
     	 return Pedido.idPaquete();
     	 
     }
+
+
 //    BUSCAR PEDIDO A PARTIR DE IDPEDIDO
     public Pedido buscarPedidoConPed(int idPedido, HashMap<Integer, Pedido> listaPedidos) {
     	
@@ -157,8 +191,8 @@ public class Amazing {
         	throw new IllegalArgumentException("No se encuentra pedido con esa id.");
         }	
    }
-    
-    
+
+
 
   
 /*
