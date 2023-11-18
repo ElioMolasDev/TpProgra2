@@ -74,6 +74,7 @@ public class Pedido {
 
         if (pedido.existePaquete(idPaquete)) {
             pedido.carritoDePaquetes.remove(idPaquete);
+            pedido.precioDePedido = pedido.precioDePedido -
         } 
         
         else {
@@ -98,9 +99,18 @@ public class Pedido {
         return Paquete.obtenerIdPaquete();
     }
 
-    //  EXISTE PAQUETE
+    //  DEVUELVE TRUE SI EXISTE PAQUETE
     public boolean existePaquete(int idPaquete) {
         return carritoDePaquetes.containsKey(idPaquete);
+    }
+
+    public Paquete obtenerPaquete(int idPaquete) {
+        if (existePaquete(idPaquete)){
+            return carritoDePaquetes.get(idPaquete);
+        }
+        else {
+           throw new IllegalArgumentException("No se encuentra paquete con esa id.");
+        }
     }
    
 

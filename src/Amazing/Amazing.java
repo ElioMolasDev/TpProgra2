@@ -155,8 +155,10 @@ public class Amazing {
     public String cargarTransporte(String patente){
 
         if (existeTransporte(patente)) {
-            listaPedidos.forEach() {
+            listaPedidos.forEach((Integer , Pedido) -> {
+                if (Pedido.obtenerEstadoDePedido()){
 
+                }
             }
         }
 
