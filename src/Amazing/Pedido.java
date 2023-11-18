@@ -10,8 +10,8 @@ public class Pedido {
     private String nombreCliente;
     private String direccionEntrega;
     private HashMap<Integer, Paquete> carritoDePaquetes;
-    private Boolean pedidoCerrado;
-    private int precioDePedido;
+    private Boolean pedidoAbierto;
+    private double precioDePedido;
 
     public Pedido(String nombreCliente, String direccionEntrega, int DNI) {
 
@@ -22,7 +22,7 @@ public class Pedido {
         this.nombreCliente = nombreCliente;
         this.direccionEntrega = direccionEntrega;
         this.carritoDePaquetes = new HashMap<>();
-        this.pedidoCerrado = false;
+        this.pedidoAbierto = true;
         this.precioDePedido = 0;
     }
     
@@ -48,8 +48,8 @@ public class Pedido {
     public int agregarPaq(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
     	
     	PaqueteEspecial paq = new PaqueteEspecial(codPedido,  volumen,  precio,  porcentaje,  adicional, obtenerDireccion());
-    	
-    	this.carritoDePaquetes.put(idPaquete(), paq);
+
+        agregaPaqAPed(paq , precio);
     	
         return idPaquete();
      }
@@ -58,17 +58,17 @@ public class Pedido {
     public int agregarPaq(int codPedido, int volumen, int precio, int porcentaje) {
     	
     	PaqueteOrdinario paq = new PaqueteOrdinario(codPedido,  volumen,  precio,  porcentaje, obtenerDireccion());
-    	
-         this.carritoDePaquetes.put(idPaquete(), paq);
+
+        agregaPaqAPed(paq , precio);
          
          return idPaquete();
      }
     
 
-    // QUITA PAQUETE D PEDIDO
+    // QUITA PAQUETE DE PEDIDO
     public static void quitarPaquete(int idPaquete, Pedido pedido) {
     	
-        if (pedido.obtenerEstadoDePedido()) {
+        if (!pedido.obtenerEstadoDePedido()) {
             throw new IllegalArgumentException("El pedido está cerrado, no se pueden quitar paquetes.");
         }
 
@@ -84,7 +84,7 @@ public class Pedido {
     // CIERRA PEDIDO
     public void cerrarPed() {
 
-        pedidoCerrado = true;
+        pedidoAbierto = false;
         
     }
         
@@ -105,13 +105,13 @@ public class Pedido {
    
 
     // DEVUELVE PRECIO APAGAR DE CLEINTE
-    public int precioAPagar() {
+    public double precioAPagar() {
         return precioDePedido;
     }
 
-    // DEVUELVE ESTADO DE PDIDO
+    // DEVUELVE SI EL PEDIDO ESTA CERRADO
     public Boolean obtenerEstadoDePedido() {
-        return pedidoCerrado;
+        return pedidoAbierto;
     }
 
     // DEVUELVE NOMBRE CLEINTE
@@ -128,6 +128,13 @@ public class Pedido {
     //DEVUELVE CARRITO DE PAQUETES
     public HashMap<Integer, Paquete> obtenerCarritoDePaquetes() {
         return carritoDePaquetes;
+    }
+
+    public void agregaPaqAPed (Paquete paq , int precio) {
+
+        this.precioDePedido += (double) precio;
+        this.carritoDePaquetes.put(idPaquete(), paq);
+
     }
 
 }
