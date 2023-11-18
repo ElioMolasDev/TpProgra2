@@ -152,17 +152,19 @@ public class Amazing {
     //por ejemplo:
     //" + [ 1002 - 101 ] Gutierrez 1147"
 
-//    public String cargarTransporte(String patente){
-//
-//        if (existeTransporte(patente)) {
-//            listaPedidos.forEach((Integer , Pedido) -> {
-//                if (Pedido.obtenerEstadoDePedido()){
-//
-//                }
-//            }
-//        }
-//
-//    }
+    public String cargarTransporte(String patente){
+
+        if (existeTransporte(patente)) {
+            for(Pedido p : listaPedidos.values()) {
+                if(p.obtenerEstadoDePedido() || p.obtenerCarritoDePaquetes()==null) {
+                    throw new IllegalArgumentException("El pedido está abierto o no tiene paquetes.");
+                }
+                buscarTransporte(patente).cargarPaquete(p.obtenerPaquete());
+                return "El transporte con patente: " + patente +" ha sido cargado.";
+            }
+        }
+        throw new IllegalArgumentException("No se encuentra transporte con esa patente.");
+    }
 
   /*  
 
@@ -177,37 +179,30 @@ public class Amazing {
 
     //  DEVUELVE EL ID DEL PEDIDO
     private static int idPedido() {
-    	
         return Pedido.obtenerIdPedido();
-        
     }
 
 
     //  DEVUELVE EL ID DEL PAQUETE
     private static int idPaquete() {
-    	
     	 return Pedido.idPaquete();
-    	 
     }
 
 
-//    BUSCAR PEDIDO A PARTIR DE IDPEDIDO
+//    DEVUELVE PEDIDO A PARTIR DE IDPEDIDO
     public Pedido buscarPedidoConPed(int idPedido, HashMap<Integer, Pedido> listaPedidos) {
 
         if (listaPedidos.containsKey(idPedido)) {
-
             return listaPedidos.get(idPedido);
         }
-        
         else {
-        	
         	throw new IllegalArgumentException("No se encuentra pedido con esa id.");
         }
     }
     
     
     
-//  BUSCAR PEDIDO A PARTIR DE IDPAQUETE
+//  DEVUELVE PEDIDO A PARTIR DE IDPAQUETE
     public Pedido buscarPedidoConPaq(int idPaquete, HashMap<Integer, Pedido> listaPedidos) {
     	
         for (HashMap.Entry<Integer, Pedido> entry : listaPedidos.entrySet()) {
@@ -218,7 +213,6 @@ public class Amazing {
                 return pedido;
             }
         }
-
         throw new IllegalArgumentException("No se encuentra pedido con esa id.");
     }
   
@@ -239,6 +233,13 @@ public class Amazing {
        return listaTransportes.containsKey(patente);
    }
 
+   private Transporte buscarTransporte(String patente){
+
+       if (listaTransportes.containsKey(patente)) {
+           return listaTransportes.get(patente);
+           }
+       throw new IllegalArgumentException("No se encuentra transporte con esa patente.");
+   }
 
 
   
@@ -247,8 +248,6 @@ public class Amazing {
     private static Cliente buscarCliente(Int idCliente);
     private static Boolean clienteTienePedidoAbierto(Int idCliente)
     private static Boolean existePaquete(Int idPaquete)
-    private static Boolean existeTransporte(String patente)
-    private static Transporte buscarTransporte(String patente)
 */
 
 

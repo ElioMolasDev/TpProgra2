@@ -1,6 +1,7 @@
 package Amazing;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,7 +47,10 @@ public abstract class Transporte {
     	
     }
     
-    public abstract Void cargarPaquete(Paquete paquete);
+    public abstract Void cargarPaquete(Pedido pedido);
 
+    public HashMap<Integer, Paquete> obtenerCarritoDelPedido(Pedido pedido){
+       return pedido.obtenerCarritoDePaquetes();
+    }
 
 }
