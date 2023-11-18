@@ -152,17 +152,17 @@ public class Amazing {
     //por ejemplo:
     //" + [ 1002 - 101 ] Gutierrez 1147"
 
-    public String cargarTransporte(String patente){
-
-        if (existeTransporte(patente)) {
-            listaPedidos.forEach((Integer , Pedido) -> {
-                if (Pedido.obtenerEstadoDePedido()){
-
-                }
-            }
-        }
-
-    }
+//    public String cargarTransporte(String patente){
+//
+//        if (existeTransporte(patente)) {
+//            listaPedidos.forEach((Integer , Pedido) -> {
+//                if (Pedido.obtenerEstadoDePedido()){
+//
+//                }
+//            }
+//        }
+//
+//    }
 
   /*  
 

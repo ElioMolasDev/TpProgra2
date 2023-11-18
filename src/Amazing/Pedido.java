@@ -45,23 +45,17 @@ public class Pedido {
     }
 
     // AGREGA PAQUETE ESPECIAL  A PEDIO
-    public int agregarPaq(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
+    public void agregarPaq(int codPedido, int volumen, int precio, int porcentaje, int adicional) {
     	
     	PaqueteEspecial paq = new PaqueteEspecial(codPedido,  volumen,  precio,  porcentaje,  adicional, obtenerDireccion());
-
         agregaPaqAPed(paq , precio);
-    	
-        return idPaquete();
      }
  
     // AGREGA PAQUETE ORDINARIO  A PEDIO
-    public int agregarPaq(int codPedido, int volumen, int precio, int porcentaje) {
+    public void agregarPaq(int codPedido, int volumen, int precio, int porcentaje) {
     	
     	PaqueteOrdinario paq = new PaqueteOrdinario(codPedido,  volumen,  precio,  porcentaje, obtenerDireccion());
-
         agregaPaqAPed(paq , precio);
-         
-         return idPaquete();
      }
     
 
@@ -73,8 +67,7 @@ public class Pedido {
         }
 
         if (pedido.existePaquete(idPaquete)) {
-            pedido.carritoDePaquetes.remove(idPaquete);
-            pedido.precioDePedido = pedido.precioDePedido -
+            pedido.quitaPaqAPed(idPaquete);
         } 
         
         else {
@@ -84,9 +77,7 @@ public class Pedido {
 
     // CIERRA PEDIDO
     public void cerrarPed() {
-
         pedidoAbierto = false;
-        
     }
         
     //  DEVUELVE ID PEDIDO
@@ -104,6 +95,7 @@ public class Pedido {
         return carritoDePaquetes.containsKey(idPaquete);
     }
 
+    //DEVUELVE PAQUETE
     public Paquete obtenerPaquete(int idPaquete) {
         if (existePaquete(idPaquete)){
             return carritoDePaquetes.get(idPaquete);
@@ -145,6 +137,12 @@ public class Pedido {
         this.precioDePedido += (double) precio;
         this.carritoDePaquetes.put(idPaquete(), paq);
 
+    }
+
+    public void quitaPaqAPed (int idPaquete) {
+
+        this.precioDePedido -= (double) obtenerPaquete(idPaquete).obtenerPrecio();
+        this.carritoDePaquetes.remove(idPaquete);
     }
 
 }

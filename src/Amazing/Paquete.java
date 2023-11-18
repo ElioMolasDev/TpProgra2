@@ -96,8 +96,10 @@ public abstract class  Paquete {
     public int obtenerVolumen() {
     	return volumen;
     }
-    
-    
+
+    public int obtenerPrecio() {
+        return precio;
+    }
     
 
 }
